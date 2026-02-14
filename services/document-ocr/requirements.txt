@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+pypdf
+python-multipart
+# google-cloud-vision # Uncomment when ready for real OCR

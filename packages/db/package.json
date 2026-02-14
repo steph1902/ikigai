@@ -1,0 +1,36 @@
+{
+  "name": "@ikigai/db",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist .turbo node_modules",
+    "dev": "tsc -w",
+    "lint": "biome check .",
+    "generate": "drizzle-kit generate:pg",
+    "migrate": "tsx src/migrate.ts",
+    "push": "drizzle-kit push:pg",
+    "studio": "drizzle-kit studio",
+    "seed": "pnpm --filter @ikigai/seed seed",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.0",
+    "pg": "^8.11.3",
+    "postgres": "^3.4.3"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
+    "@ikigai/types": "workspace:*",
+    "@types/node": "^22.10.5",
+    "@types/pg": "^8.11.2",
+    "drizzle-kit": "^0.20.14",
+    "tsx": "^4.7.1",
+    "typescript": "^5.7.3"
+  }
+}

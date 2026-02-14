@@ -1,0 +1,161 @@
+services:
+  postgres:
+    build:
+      context: ./postgres
+    container_name: ikigai-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ikigai
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ikigai-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: ikigai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ikigai-net
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.6
+    container_name: ikigai-meilisearch
+    environment:
+      MEILI_MASTER_KEY: masterKey
+    ports:
+      - "7700:7700"
+    volumes:
+      - meili_data:/meili_data
+    networks:
+      - ikigai-net
+
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:latest
+    container_name: ikigai-redpanda
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr 0.0.0.0:33145
+      - --adb-addr 0.0.0.0:9644
+    ports:
+      - "18081:18081"
+      - "18082:18082"
+      - "19092:19092"
+      - "9644:9644"
+    volumes:
+      - redpanda_data:/var/lib/redpanda/data
+    networks:
+      - ikigai-net
+
+  scraper:
+    build:
+      context: ../services/scraper
+      dockerfile: Dockerfile
+    container_name: ikigai-scraper
+    restart: "no" # Don't restart automatically, run on demand or cron
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    depends_on:
+      - postgres
+    networks:
+      - ikigai-net
+
+  embedding:
+    build:
+      context: ../services/embedding
+      dockerfile: Dockerfile
+    container_name: ikigai-embedding
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+    networks:
+      - ikigai-net
+
+  pricing-model:
+    build:
+      context: ../services/pricing-model
+      dockerfile: Dockerfile
+    container_name: ikigai-pricing
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
+    networks:
+      - ikigai-net
+
+  document-ocr:
+    build:
+      context: ../services/document-ocr
+      dockerfile: Dockerfile
+    container_name: ikigai-document-ocr
+    ports:
+      - "8003:8003"
+    restart: unless-stopped
+    networks:
+      - ikigai-net
+
+  vr-engine:
+    build:
+      context: ../services/vr-engine
+      dockerfile: Dockerfile
+    container_name: ikigai-vr-engine
+    ports:
+      - "8004:8004"
+    restart: unless-stopped
+    networks:
+      - ikigai-net
+
+  orchestrator:
+    build:
+      context: ../services/orchestrator
+      dockerfile: Dockerfile
+    container_name: ikigai-orchestrator
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - ikigai-net
+
+  line-bot:
+    build:
+      context: ..
+      dockerfile: apps/line-bot/Dockerfile
+    container_name: ikigai-line-bot
+    ports:
+      - "8005:8005"
+    env_file:
+      - ../.env
+    depends_on:
+      - orchestrator
+    networks:
+      - ikigai-net
+
+volumes:
+  postgres_data:
+  redis_data:
+  meili_data:
+  redpanda_data:
+
+
+networks:
+  ikigai-net:
+    driver: bridge
