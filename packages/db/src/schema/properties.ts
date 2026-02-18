@@ -60,6 +60,8 @@ export const earthquakeStandardEnum = pgEnum("earthquake_standard", [
   "unknown",
 ]);
 
+export const rainsStatusEnum = pgEnum("rains_status", ["synced", "attested", "exempt"]);
+
 export const properties = pgTable(
   "properties",
   {
@@ -102,6 +104,9 @@ export const properties = pgTable(
     isActive: boolean("is_active").default(true),
     lastScrapedAt: timestamp("last_scraped_at", { withTimezone: true }),
     embedding: vectorType("embedding"), // pgvector
+    rainsStatus: rainsStatusEnum("rains_status"),
+    designatedZone: boolean("designated_zone").default(false), // e.g. Urban Planning Zone requiring report
+    psychologicalDefect: text("psychological_defect"), // "Jiko-bukken" details
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },

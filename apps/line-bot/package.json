@@ -1,21 +1,21 @@
 {
-    "name": "line-bot",
-    "version": "1.0.0",
-    "scripts": {
-        "dev": "tsx watch src/index.ts",
-        "start": "tsx src/index.ts",
-        "type-check": "tsc --noEmit",
-        "build": "tsc"
-    },
-    "dependencies": {
-        "@hono/node-server": "^1.13.7",
-        "@line/bot-sdk": "^9.5.1",
-        "dotenv": "^16.4.7",
-        "hono": "^4.6.14"
-    },
-    "devDependencies": {
-        "@types/node": "^20.17.10",
-        "tsx": "^4.19.2",
-        "typescript": "^5.7.2"
-    }
+  "name": "line-bot",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "type-check": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@line/bot-sdk": "^9.5.1",
+    "dotenv": "^16.4.7",
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
 }

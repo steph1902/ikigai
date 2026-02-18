@@ -18,6 +18,14 @@ export const transactionStatusEnum = pgEnum("transaction_status", [
   "cancelled",
 ]);
 
+export const paymentMethodEnum = pgEnum("payment_method", ["cash", "mortgage"]);
+export const feftaStatusEnum = pgEnum("fefta_status", [
+  "not_required",
+  "review_pending",
+  "approved",
+  "submitted",
+]);
+
 export const transactions = pgTable("transactions", {
   id: uuid("id").primaryKey().defaultRandom(),
   shortlistedPropertyId: uuid("shortlisted_property_id")
@@ -34,6 +42,8 @@ export const transactions = pgTable("transactions", {
   agreedPrice: bigint("agreed_price", { mode: "number" }),
   earnestMoney: bigint("earnest_money", { mode: "number" }),
   settlementDate: date("settlement_date"),
+  paymentMethod: paymentMethodEnum("payment_method").default("mortgage"),
+  feftaStatus: feftaStatusEnum("fefta_status").default("not_required"),
   mortgageStatus: mortgageStatusEnum("mortgage_status").default("not_started"),
   mortgageInstitution: text("mortgage_institution"),
   mortgageAmount: bigint("mortgage_amount", { mode: "number" }),

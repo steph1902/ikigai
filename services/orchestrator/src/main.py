@@ -7,7 +7,14 @@ from typing import Dict, Any, List, Optional
 import uvicorn
 import uuid
 
+from fastapi.staticfiles import StaticFiles
+import os
+
 app = FastAPI(title="IKIGAI Orchestrator")
+
+# Ensure documents directory exists
+os.makedirs("public/documents", exist_ok=True)
+app.mount("/documents", StaticFiles(directory="public/documents"), name="documents")
 
 # Compile the graph on startup
 graph = create_graph()

@@ -52,7 +52,7 @@ export default function SignUp() {
         placeholder="Password"
         className="mb-4 p-2 border rounded"
       />
-      <button onClick={signUp} className="p-2 bg-green-500 text-white rounded">
+      <button type="submit" onClick={signUp} className="p-2 bg-green-500 text-white rounded">
         Sign Up
       </button>
       <a href="/sign-in" className="mt-4 text-blue-500">

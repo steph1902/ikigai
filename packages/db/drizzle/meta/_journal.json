@@ -15,6 +15,13 @@
       "when": 1771031783378,
       "tag": "0001_curved_mordo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1771076263854,
+      "tag": "0002_boring_star_brand",
+      "breakpoints": true
     }
   ]
 }

@@ -43,77 +43,114 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* SUMI Design System — IKIGAI brand tokens */
+  --color-sumi-ink: var(--sumi-ink);
+  --color-sumi-paper: var(--sumi-paper);
+  --color-sumi-stone: var(--sumi-stone);
+  --color-sumi-cloud: var(--sumi-cloud);
+  --color-sumi-accent: var(--sumi-accent);
+  --color-sumi-accent-hover: var(--sumi-accent-hover);
+  --color-sumi-ai: var(--sumi-ai);
+  --color-sumi-ai-glow: var(--sumi-ai-glow);
+  --color-sumi-success: var(--sumi-success);
+  --color-sumi-warning: var(--sumi-warning);
+  --color-sumi-danger: var(--sumi-danger);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* ─── shadcn defaults ──────────────────── */
+  --background: oklch(0.985 0.001 210);
+  --foreground: oklch(0.18 0.02 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.18 0.02 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.18 0.02 260);
+  --primary: oklch(0.35 0.05 260);
+  --primary-foreground: oklch(0.985 0.001 210);
+  --secondary: oklch(0.96 0.005 260);
+  --secondary-foreground: oklch(0.25 0.03 260);
+  --muted: oklch(0.96 0.005 260);
+  --muted-foreground: oklch(0.5 0.02 260);
+  --accent: oklch(0.55 0.16 160);
+  --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.87 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --border: oklch(0.91 0.005 260);
+  --input: oklch(0.91 0.005 260);
+  --ring: oklch(0.55 0.16 160);
+  --chart-1: oklch(0.55 0.16 160);
+  --chart-2: oklch(0.6 0.12 185);
+  --chart-3: oklch(0.4 0.07 227);
+  --chart-4: oklch(0.83 0.19 84);
+  --chart-5: oklch(0.77 0.19 70);
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.18 0.02 260);
+  --sidebar-primary: oklch(0.35 0.05 260);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-accent: oklch(0.96 0.005 260);
+  --sidebar-accent-foreground: oklch(0.25 0.03 260);
+  --sidebar-border: oklch(0.91 0.005 260);
   --sidebar-ring: oklch(0.87 0 0);
+
+  /* ─── SUMI Design System tokens ──────────── */
+  --sumi-ink: oklch(0.18 0.02 260);
+  --sumi-paper: oklch(0.985 0.001 210);
+  --sumi-stone: oklch(0.55 0.01 260);
+  --sumi-cloud: oklch(0.95 0.005 210);
+  --sumi-accent: oklch(0.55 0.16 160);
+  --sumi-accent-hover: oklch(0.48 0.14 160);
+  --sumi-ai: oklch(0.55 0.2 275);
+  --sumi-ai-glow: oklch(0.65 0.25 275 / 0.15);
+  --sumi-success: oklch(0.6 0.17 145);
+  --sumi-warning: oklch(0.7 0.16 65);
+  --sumi-danger: oklch(0.55 0.22 27);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: oklch(0.13 0.015 260);
+  --foreground: oklch(0.93 0.005 210);
+  --card: oklch(0.17 0.02 260);
+  --card-foreground: oklch(0.93 0.005 210);
+  --popover: oklch(0.17 0.02 260);
+  --popover-foreground: oklch(0.93 0.005 210);
+  --primary: oklch(0.93 0.005 210);
+  --primary-foreground: oklch(0.18 0.02 260);
+  --secondary: oklch(0.22 0.02 260);
+  --secondary-foreground: oklch(0.93 0.005 210);
+  --muted: oklch(0.22 0.02 260);
+  --muted-foreground: oklch(0.65 0.015 260);
+  --accent: oklch(0.6 0.18 160);
+  --accent-foreground: oklch(0.13 0.015 260);
+  --destructive: oklch(0.45 0.18 25);
+  --destructive-foreground: oklch(0.65 0.24 25);
+  --border: oklch(0.25 0.02 260);
+  --input: oklch(0.25 0.02 260);
+  --ring: oklch(0.6 0.18 160);
+  --chart-1: oklch(0.6 0.18 160);
+  --chart-2: oklch(0.7 0.17 162);
+  --chart-3: oklch(0.77 0.19 70);
+  --chart-4: oklch(0.63 0.27 304);
+  --chart-5: oklch(0.65 0.25 16);
+  --sidebar: oklch(0.15 0.02 260);
+  --sidebar-foreground: oklch(0.93 0.005 210);
+  --sidebar-primary: oklch(0.6 0.18 160);
+  --sidebar-primary-foreground: oklch(0.93 0 0);
+  --sidebar-accent: oklch(0.22 0.02 260);
+  --sidebar-accent-foreground: oklch(0.93 0.005 210);
+  --sidebar-border: oklch(0.25 0.02 260);
+  --sidebar-ring: oklch(0.44 0 0);
+
+  /* ─── SUMI dark mode overrides ──────────── */
+  --sumi-ink: oklch(0.93 0.005 210);
+  --sumi-paper: oklch(0.13 0.015 260);
+  --sumi-stone: oklch(0.5 0.01 260);
+  --sumi-cloud: oklch(0.2 0.015 260);
+  --sumi-accent: oklch(0.6 0.18 160);
+  --sumi-accent-hover: oklch(0.65 0.2 160);
+  --sumi-ai: oklch(0.6 0.22 275);
+  --sumi-ai-glow: oklch(0.6 0.25 275 / 0.2);
 }
 
 @layer base {
@@ -122,5 +159,6 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "palt";
   }
 }

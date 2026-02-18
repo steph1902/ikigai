@@ -1,0 +1,23 @@
+{
+    "name": "@ikigai/domain",
+    "version": "0.1.0",
+    "private": true,
+    "exports": {
+        ".": "./src/index.ts",
+        "./rules/fees": "./src/rules/fees.ts",
+        "./rules/risk": "./src/rules/risk.ts",
+        "./rules/budget": "./src/rules/budget.ts",
+        "./journey": "./src/journey/journey.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w",
+        "lint": "biome check .",
+        "type-check": "tsc --noEmit",
+        "test": "vitest run"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.3",
+        "vitest": "^3.0.0"
+    }
+}

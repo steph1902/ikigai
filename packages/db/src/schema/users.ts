@@ -13,6 +13,12 @@ export const communicationPreferenceEnum = pgEnum("communication_preference", [
   "concise",
 ]);
 
+export const residencyStatusEnum = pgEnum("residency_status", [
+  "resident",
+  "non_resident",
+  "corporate",
+]);
+
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").notNull().unique(),
@@ -30,6 +36,11 @@ export const users = pgTable("users", {
   communicationPreference: communicationPreferenceEnum("communication_preference").default(
     "detailed",
   ),
+  romanjiName: text("romanji_name"),
+  katakanaName: text("katakana_name"),
+  nationality: text("nationality"),
+  residencyStatus: residencyStatusEnum("residency_status").default("resident"),
+  domesticContactPerson: jsonb("domestic_contact_person"), // { name, phone, address }
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(), // Trigger handled by application/DB level if needed, or manually updated
 });

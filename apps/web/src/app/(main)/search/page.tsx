@@ -14,6 +14,7 @@ const MOCK_PROPERTIES = [
     type: "Mansion",
     size: "65.4 sqm",
     layout: "2LDK",
+    region: "tokyo",
   },
   {
     id: "2",
@@ -23,6 +24,7 @@ const MOCK_PROPERTIES = [
     type: "Kodate",
     size: "98.2 sqm",
     layout: "3LDK",
+    region: "tokyo",
   },
   {
     id: "3",
@@ -32,11 +34,47 @@ const MOCK_PROPERTIES = [
     type: "Mansion",
     size: "80.0 sqm",
     layout: "2LDK",
+    region: "tokyo",
+  },
+  {
+    id: "4",
+    name: "Osaka Umeda Tower",
+    price: "¥55,000,000",
+    location: "Kita-ku, Osaka",
+    type: "Mansion",
+    size: "70.0 sqm",
+    layout: "2LDK",
+    region: "osaka",
+  },
+  {
+    id: "5",
+    name: "Namba Parks Residence",
+    price: "¥48,000,000",
+    location: "Naniwa-ku, Osaka",
+    type: "Mansion",
+    size: "55.0 sqm",
+    layout: "1LDK",
+    region: "osaka",
+  },
+  {
+    id: "6",
+    name: "Nagoya Station Gate Tower",
+    price: "¥42,000,000",
+    location: "Nakamura-ku, Nagoya",
+    type: "Mansion",
+    size: "60.0 sqm",
+    layout: "2LDK",
+    region: "nagoya",
   },
 ];
 
 export default function SearchPage() {
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
+  const [selectedRegion, setSelectedRegion] = useState("all");
+
+  const filteredProperties = MOCK_PROPERTIES.filter(
+    (p) => selectedRegion === "all" || p.region === selectedRegion,
+  );
 
   return (
     <div className="container py-6">
@@ -64,7 +102,25 @@ export default function SearchPage() {
           <h2 className="font-semibold mb-4">Filters</h2>
           <div className="space-y-4">
             <div>
-              <label htmlFor="price-range" className="text-sm font-medium">Price Range</label>
+              <label htmlFor="region-select" className="text-sm font-medium">
+                Region
+              </label>
+              <select
+                id="region-select"
+                className="w-full mt-2 p-2 border rounded-md"
+                value={selectedRegion}
+                onChange={(e) => setSelectedRegion(e.target.value)}
+              >
+                <option value="all">All Regions</option>
+                <option value="tokyo">Tokyo</option>
+                <option value="osaka">Osaka</option>
+                <option value="nagoya">Nagoya</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="price-range" className="text-sm font-medium">
+                Price Range
+              </label>
               <input id="price-range" type="range" className="w-full mt-2" />
             </div>
             <div>
@@ -85,7 +141,7 @@ export default function SearchPage() {
         <div className="md:col-span-3">
           {viewMode === "list" ? (
             <div className="grid grid-cols-1 gap-4">
-              {MOCK_PROPERTIES.map((property) => (
+              {filteredProperties.map((property) => (
                 <div
                   key={property.id}
                   className="border rounded-lg p-4 flex justify-between items-center hover:shadow-md transition-shadow"

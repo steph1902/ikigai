@@ -1,0 +1,23 @@
+{
+    "name": "@ikigai/i18n",
+    "version": "0.1.0",
+    "private": true,
+    "exports": {
+        ".": "./src/index.ts",
+        "./formatters": "./src/formatters/japanese.ts",
+        "./config": "./src/config.ts",
+        "./messages/ja": "./src/messages/ja.ts",
+        "./messages/en": "./src/messages/en.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w",
+        "lint": "biome check .",
+        "type-check": "tsc --noEmit",
+        "test": "vitest run"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.3",
+        "vitest": "^3.0.0"
+    }
+}
