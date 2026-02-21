@@ -1,6 +1,6 @@
 import { Bot, User } from "lucide-react";
 import * as React from "react";
-import { cn } from "@/utils";
+import { cn } from "../utils";
 
 interface ChatMessageProps extends React.HTMLAttributes<HTMLDivElement> {
     role: "user" | "assistant" | "system";

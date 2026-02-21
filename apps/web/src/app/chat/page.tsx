@@ -1,9 +1,9 @@
 "use client";
 
 import { useChat } from "ai/react";
-import { ChatMessage } from "@ikigai/ui/src/composed/chat-message";
-import { Button } from "@ikigai/ui/src/primitives/button";
-import { Input } from "@ikigai/ui/src/primitives/input";
+import { ChatMessage } from "@ikigai/ui/chat-message";
+import { Button } from "@ikigai/ui/button";
+import { Input } from "@ikigai/ui/input";
 import { Send } from "lucide-react";
 import { useEffect, useRef } from "react";
 

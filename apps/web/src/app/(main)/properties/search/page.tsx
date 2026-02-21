@@ -2,8 +2,8 @@
 
 import { formatPrice, formatArea, formatStationAccessShort, formatBuildingAge } from "@ikigai/i18n/formatters";
 import { Button } from "@ikigai/ui/button";
-import { Input } from "@ikigai/ui/src/primitives/input";
-import { Select } from "@ikigai/ui/src/primitives/select";
+import { Input } from "@ikigai/ui/input";
+import { Select } from "@ikigai/ui/select";
 import {
     Building2,
     ChevronDown,
@@ -403,7 +403,7 @@ export default function PropertySearchPage() {
                         {results.pagination.totalPages > 1 && (
                             <div className="mt-8 flex items-center justify-center gap-2">
                                 <Button
-                                    variant="outline"
+                                    variant="secondary"
                                     disabled={page === 1}
                                     onClick={() => setPage(page - 1)}
                                 >
@@ -413,7 +413,7 @@ export default function PropertySearchPage() {
                                     {page} / {results.pagination.totalPages}
                                 </span>
                                 <Button
-                                    variant="outline"
+                                    variant="secondary"
                                     disabled={!results.pagination.hasMore}
                                     onClick={() => setPage(page + 1)}
                                 >
@@ -432,7 +432,7 @@ export default function PropertySearchPage() {
                         <p className="mb-4 text-sm text-muted-foreground">
                             検索条件を変更してお試しください
                         </p>
-                        <Button variant="outline" onClick={clearFilters}>
+                        <Button variant="secondary" onClick={clearFilters}>
                             条件をクリア
                         </Button>
                     </div>

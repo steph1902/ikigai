@@ -1,5 +1,5 @@
-import { RiskFlagBanner } from "@ikigai/ui/src/composed/risk-flag-banner";
-import { Button } from "@ikigai/ui/src/primitives/button";
+import { RiskFlagBanner } from "@ikigai/ui/risk-flag-banner";
+import { Button } from "@ikigai/ui/button";
 import {
     MapPin,
     Ruler,

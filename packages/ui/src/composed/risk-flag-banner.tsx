@@ -1,7 +1,7 @@
 import { AlertTriangle, Info, XCircle } from "lucide-react";
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/utils";
+import { cn } from "../utils";
 
 const bannerVariants = cva(
     "flex items-start gap-3 rounded-lg border p-4 text-sm shadow-sm",

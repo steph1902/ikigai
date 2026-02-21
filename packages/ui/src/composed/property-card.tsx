@@ -1,7 +1,7 @@
 import { BadgeCheck, MapPin, Maximize, Ruler } from "lucide-react";
 import * as React from "react";
 import { Button } from "../primitives/button";
-import { cn } from "@/utils";
+import { cn } from "../utils";
 
 interface PropertyCardProps extends React.HTMLAttributes<HTMLDivElement> {
     listing: {

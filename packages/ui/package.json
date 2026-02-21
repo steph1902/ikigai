@@ -5,7 +5,22 @@
   "exports": {
     ".": "./src/index.ts",
     "./utils": "./src/utils.ts",
-    "./button": "./src/button.tsx"
+    "./button": "./src/primitives/button.tsx",
+    "./input": "./src/primitives/input.tsx",
+    "./dialog": "./src/primitives/dialog.tsx",
+    "./tabs": "./src/primitives/tabs.tsx",
+    "./toast": "./src/primitives/toast.tsx",
+    "./select": "./src/primitives/select.tsx",
+    "./dropdown-menu": "./src/primitives/dropdown-menu.tsx",
+    "./chat-message": "./src/composed/chat-message.tsx",
+    "./property-card": "./src/composed/property-card.tsx",
+    "./risk-flag-banner": "./src/composed/risk-flag-banner.tsx",
+    "./page-shell": "./src/layout/page-shell.tsx",
+    "./sidebar": "./src/layout/sidebar.tsx",
+    "./tailwind.config": "./tailwind.config.ts",
+    "./tokens/colors": "./src/tokens/colors.ts",
+    "./tokens/spacing": "./src/tokens/spacing.ts",
+    "./tokens/typography": "./src/tokens/typography.ts"
   },
   "scripts": {
     "lint": "biome check .",
