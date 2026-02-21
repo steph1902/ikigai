@@ -97,7 +97,6 @@ Turborepo monorepo with clear separation between frontend applications, backend 
 | `services/vr-engine` | Python, FastAPI | 2D floor plan → 3D WebXR environment generation |
 | `services/document-ocr` | Python, FastAPI | Japanese legal document OCR and analysis pipeline |
 | `services/embedding` | Python, FastAPI | Vector embedding generation for semantic search |
-| `services/scraper` | Python, FastAPI | Data ingestion adapter (provider pattern for future real-source integration) |
 
 ### Shared Packages
 
@@ -152,8 +151,7 @@ ikigai/
 │   ├── pricing-model/       # ML price prediction (LightGBM)
 │   ├── vr-engine/           # 3D/WebXR generation
 │   ├── document-ocr/        # Japanese document OCR
-│   ├── embedding/           # Vector embedding service
-│   └── scraper/             # Data ingestion adapter
+│   └── embedding/           # Vector embedding service
 ├── packages/
 │   ├── db/                  # Drizzle ORM — 11 schemas + migrations
 │   ├── ui/                  # SUMI design system — 10+ components
@@ -266,7 +264,7 @@ This project uses **realistic synthetic data** rather than scraped data (a delib
 - Building features with realistic probability distributions
 - 5-year market trend simulation with seasonal patterns
 
-The data ingestion layer is architected with a **provider-based adapter pattern** (`services/scraper/`) — designed to plug into real sources (REINS API, portal feeds, government registries) when licensed access is obtained.
+The data ingestion layer is architected with a **provider-based adapter pattern** — designed to plug into real sources (REINS API, portal feeds, government registries) when licensed access is obtained.
 
 ---
 

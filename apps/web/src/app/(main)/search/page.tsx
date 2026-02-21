@@ -1,174 +1,157 @@
 "use client";
 
-import { Button } from "@ikigai/ui/button";
-import Link from "next/link";
 import { useState } from "react";
 
-// Mock Data
-const MOCK_PROPERTIES = [
-  {
-    id: "1",
-    name: "Modern Apartment in Shibuya",
-    price: "¥85,000,000",
-    location: "Shibuya-ku, Tokyo",
-    type: "Mansion",
-    size: "65.4 sqm",
-    layout: "2LDK",
-    region: "tokyo",
-  },
-  {
-    id: "2",
-    name: "Cozy House in Setagaya",
-    price: "¥62,000,000",
-    location: "Setagaya-ku, Tokyo",
-    type: "Kodate",
-    size: "98.2 sqm",
-    layout: "3LDK",
-    region: "tokyo",
-  },
-  {
-    id: "3",
-    name: "Luxury Condo in Minato",
-    price: "¥120,000,000",
-    location: "Minato-ku, Tokyo",
-    type: "Mansion",
-    size: "80.0 sqm",
-    layout: "2LDK",
-    region: "tokyo",
-  },
-  {
-    id: "4",
-    name: "Osaka Umeda Tower",
-    price: "¥55,000,000",
-    location: "Kita-ku, Osaka",
-    type: "Mansion",
-    size: "70.0 sqm",
-    layout: "2LDK",
-    region: "osaka",
-  },
-  {
-    id: "5",
-    name: "Namba Parks Residence",
-    price: "¥48,000,000",
-    location: "Naniwa-ku, Osaka",
-    type: "Mansion",
-    size: "55.0 sqm",
-    layout: "1LDK",
-    region: "osaka",
-  },
-  {
-    id: "6",
-    name: "Nagoya Station Gate Tower",
-    price: "¥42,000,000",
-    location: "Nakamura-ku, Nagoya",
-    type: "Mansion",
-    size: "60.0 sqm",
-    layout: "2LDK",
-    region: "nagoya",
-  },
+const PRICE_OPTIONS = [
+  { value: "", label: "指定なし" },
+  { value: "30000000", label: "3,000万円" },
+  { value: "50000000", label: "5,000万円" },
+  { value: "70000000", label: "7,000万円" },
+  { value: "100000000", label: "1億円" },
+];
+
+const LAYOUT_OPTIONS = ["1R", "1K", "1LDK", "2LDK", "3LDK", "4LDK"];
+
+const WALK_OPTIONS = [
+  { value: "5", label: "5分以内" },
+  { value: "10", label: "10分以内" },
+  { value: "15", label: "15分以内" },
 ];
 
 export default function SearchPage() {
-  const [viewMode, setViewMode] = useState<"list" | "map">("list");
-  const [selectedRegion, setSelectedRegion] = useState("all");
+  const [query, setQuery] = useState("");
+  const [selectedLayouts, setSelectedLayouts] = useState<string[]>([]);
 
-  const filteredProperties = MOCK_PROPERTIES.filter(
-    (p) => selectedRegion === "all" || p.region === selectedRegion,
-  );
+  const toggleLayout = (layout: string) => {
+    setSelectedLayouts((prev) =>
+      prev.includes(layout)
+        ? prev.filter((l) => l !== layout)
+        : [...prev, layout],
+    );
+  };
 
   return (
-    <div className="container py-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Property Search</h1>
-        <div className="flex gap-2">
-          <Button
-            variant={viewMode === "list" ? "default" : "outline"}
-            onClick={() => setViewMode("list")}
-          >
-            List View
-          </Button>
-          <Button
-            variant={viewMode === "map" ? "default" : "outline"}
-            onClick={() => setViewMode("map")}
-          >
-            Map View
-          </Button>
-        </div>
+    <div className="max-w-6xl mx-auto py-8 px-4">
+      <h1 className="text-2xl font-bold text-[#1A1A2E] mb-6">物件検索</h1>
+
+      {/* Search Bar */}
+      <div className="relative mb-8">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="エリア、駅名、マンション名で検索"
+          className="w-full rounded-xl border border-[#E0E0E8] px-4 py-3 pl-11 text-sm focus:outline-none focus:ring-2 focus:ring-[#3D5A80] focus:border-transparent bg-white"
+        />
+        <svg
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6B6B80]"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Filters Sidebar */}
-        <div className="md:col-span-1 border rounded-lg p-4 h-fit">
-          <h2 className="font-semibold mb-4">Filters</h2>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="region-select" className="text-sm font-medium">
-                Region
-              </label>
-              <select
-                id="region-select"
-                className="w-full mt-2 p-2 border rounded-md"
-                value={selectedRegion}
-                onChange={(e) => setSelectedRegion(e.target.value)}
-              >
-                <option value="all">All Regions</option>
-                <option value="tokyo">Tokyo</option>
-                <option value="osaka">Osaka</option>
-                <option value="nagoya">Nagoya</option>
+        <div className="space-y-6">
+          {/* Price Range */}
+          <div>
+            <h3 className="text-sm font-medium text-[#1A1A2E] mb-2">
+              価格帯
+            </h3>
+            <div className="space-y-2">
+              <select className="w-full rounded-md border border-[#E0E0E8] px-3 py-2 text-sm bg-white">
+                {PRICE_OPTIONS.map((o) => (
+                  <option key={`min-${o.value}`} value={o.value}>
+                    {o.value ? `${o.label}以上` : o.label}
+                  </option>
+                ))}
+              </select>
+              <select className="w-full rounded-md border border-[#E0E0E8] px-3 py-2 text-sm bg-white">
+                {PRICE_OPTIONS.map((o) => (
+                  <option key={`max-${o.value}`} value={o.value}>
+                    {o.value ? `${o.label}以下` : o.label}
+                  </option>
+                ))}
               </select>
             </div>
-            <div>
-              <label htmlFor="price-range" className="text-sm font-medium">
-                Price Range
-              </label>
-              <input id="price-range" type="range" className="w-full mt-2" />
-            </div>
-            <div>
-              <span className="text-sm font-medium">Type</span>
-              <div className="flex flex-col gap-2 mt-2">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" /> Mansion
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" /> Kodate
-                </label>
-              </div>
+          </div>
+
+          {/* Layout */}
+          <div>
+            <h3 className="text-sm font-medium text-[#1A1A2E] mb-2">
+              間取り
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {LAYOUT_OPTIONS.map((layout) => (
+                <button
+                  key={layout}
+                  type="button"
+                  onClick={() => toggleLayout(layout)}
+                  className={`px-3 py-1.5 rounded-md text-sm border transition-colors ${selectedLayouts.includes(layout)
+                      ? "bg-[#3D5A80] text-white border-[#3D5A80]"
+                      : "bg-white text-[#2D2D44] border-[#E0E0E8] hover:border-[#3D5A80]"
+                    }`}
+                >
+                  {layout}
+                </button>
+              ))}
             </div>
           </div>
+
+          {/* Walk Minutes */}
+          <div>
+            <h3 className="text-sm font-medium text-[#1A1A2E] mb-2">
+              駅徒歩
+            </h3>
+            <select className="w-full rounded-md border border-[#E0E0E8] px-3 py-2 text-sm bg-white">
+              <option value="">指定なし</option>
+              {WALK_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Earthquake Standard */}
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="earthquake"
+              className="rounded border-[#E0E0E8]"
+            />
+            <label htmlFor="earthquake" className="text-sm text-[#2D2D44]">
+              新耐震基準のみ
+            </label>
+          </div>
+
+          {/* Search Button */}
+          <button
+            type="button"
+            className="w-full bg-[#3D5A80] text-white rounded-md py-2.5 text-sm font-medium hover:bg-[#2C4A6E] transition-colors"
+          >
+            検索する
+          </button>
         </div>
 
         {/* Results Area */}
-        <div className="md:col-span-3">
-          {viewMode === "list" ? (
-            <div className="grid grid-cols-1 gap-4">
-              {filteredProperties.map((property) => (
-                <div
-                  key={property.id}
-                  className="border rounded-lg p-4 flex justify-between items-center hover:shadow-md transition-shadow"
-                >
-                  <div>
-                    <h3 className="font-bold text-lg">{property.name}</h3>
-                    <p className="text-gray-600">{property.location}</p>
-                    <div className="flex gap-4 mt-2 text-sm text-gray-500">
-                      <span>{property.type}</span>
-                      <span>{property.layout}</span>
-                      <span>{property.size}</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xl font-bold text-primary">{property.price}</p>
-                    <Button asChild className="mt-2">
-                      <Link href={`/properties/${property.id}`}>View Details</Link>
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="border rounded-lg h-[600px] bg-gray-100 flex items-center justify-center">
-              <p className="text-gray-500">Map Component Placeholder (MapLibre)</p>
-            </div>
-          )}
+        <div className="lg:col-span-3">
+          <div className="bg-[#F0F0F5] rounded-xl p-12 text-center">
+            <p className="text-4xl mb-4">🔍</p>
+            <p className="text-[#6B6B80] text-sm">
+              条件を指定して検索してください
+            </p>
+            <p className="text-[#6B6B80] text-xs mt-2">
+              または、AIチャットで「渋谷区で3LDKの物件を探して」と話しかけてください
+            </p>
+          </div>
         </div>
       </div>
     </div>
