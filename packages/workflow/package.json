@@ -1,0 +1,21 @@
+{
+    "name": "@ikigai/workflow",
+    "version": "0.1.0",
+    "private": true,
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w",
+        "lint": "biome check .",
+        "type-check": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@ikigai/types": "workspace:*",
+        "xstate": "^5.18.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.3"
+    }
+}

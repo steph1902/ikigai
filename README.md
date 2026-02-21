@@ -86,6 +86,7 @@ Turborepo monorepo with clear separation between frontend applications, backend 
 | `apps/web` | Next.js 15 (App Router), Radix UI, Tailwind CSS 4 | Buyer-facing web application |
 | `apps/mobile` | React Native, Expo SDK 52, NativeWind | iOS/Android cross-platform app |
 | `apps/admin` | Next.js 15 | Internal agent/admin dashboard |
+| `apps/agent-dashboard` | Next.js 15 | Partner agent portal — escalation queue, viewing schedule, transaction pipeline |
 | `apps/line-bot` | Hono on Cloudflare Workers | LINE messaging integration (most popular messaging app in Japan) |
 
 ### AI & ML Services
@@ -107,10 +108,19 @@ Turborepo monorepo with clear separation between frontend applications, backend 
 | `packages/i18n` | Japanese/English internationalization with domain-specific formatters (¥万/億 currency, ㎡/坪 area, 築年数 building age, 丁目番地号 addresses) |
 | `packages/seed` | Synthetic data generator — geographically accurate Tokyo property listings across 8 wards with correlated pricing, real station/rail line data, and earthquake resistance classification (新耐震/旧耐震 based on 1981 building code) |
 | `packages/validators` | Zod-based shared validation schemas |
-| `packages/auth` | Authentication utilities |
-| `packages/domain` | Domain logic and business rules |
-| `packages/types` | Shared TypeScript type definitions |
-| `packages/logger` | Structured logging |
+| `packages/auth` | Better Auth — email/password, Google, LINE social providers, React client hook |
+| `packages/domain` | Domain logic and business rules (brokerage fees, risk scoring, budget rules) |
+| `packages/types` | Shared TypeScript type definitions (API responses, search criteria, journey stages) |
+| `packages/logger` | Pino structured logging — PII redaction, LLM cost tracking, child loggers |
+| `packages/api` | tRPC v11 router — 8 domain routers (property, journey, conversation, transaction, document, user, notification, admin) |
+| `packages/ai` | AI orchestration client — streaming SSE, mediation category A/B/C classifier |
+| `packages/actions` | LAM Action Engine — 13 registered actions, three-tier permission model |
+| `packages/workflow` | XState v5 purchase journey state machine — 7 stages with guards and Category C escalation |
+| `packages/documents` | Document Intelligence client — Zod-validated OCR results, risk flag filtering |
+| `packages/pricing` | Price prediction client — valuation, renovation estimation, comparison formatting |
+| `packages/vr` | VR/3D client — GLTF model generation, WebXR viewer configuration |
+| `packages/search` | Search engine client — SQL/semantic/hybrid modes, suggestion autocomplete |
+| `packages/notifications` | Multi-channel notifications — 7 bilingual templates, delivery routing |
 
 ### Infrastructure
 
@@ -133,6 +143,7 @@ ikigai/
 │   ├── web/                 # Next.js 15 — Buyer-facing web app
 │   ├── mobile/              # Expo SDK 52 — iOS/Android
 │   ├── admin/               # Internal admin dashboard
+│   ├── agent-dashboard/     # Partner agent portal
 │   └── line-bot/            # Hono on Cloudflare Workers
 ├── services/
 │   ├── orchestrator/        # ★ LangGraph multi-agent engine (Python)
@@ -158,10 +169,19 @@ ikigai/
 │   ├── i18n/                # JP/EN messages + Japanese formatters
 │   ├── seed/                # Synthetic Tokyo property data generator
 │   ├── validators/          # Zod schemas
-│   ├── auth/                # Authentication
-│   ├── domain/              # Domain logic
+│   ├── auth/                # Authentication (Better Auth + social)
+│   ├── domain/              # Domain logic (fees, risk, budget)
 │   ├── types/               # Shared types
-│   └── logger/              # Structured logging
+│   ├── logger/              # Structured logging (Pino)
+│   ├── api/                 # tRPC v11 — 8 domain routers
+│   ├── ai/                  # AI orchestration client + mediation
+│   ├── actions/             # LAM Action Engine (13 actions)
+│   ├── workflow/            # XState v5 purchase journey machine
+│   ├── documents/           # Document Intelligence client
+│   ├── pricing/             # Price prediction client
+│   ├── vr/                  # VR/3D client + WebXR config
+│   ├── search/              # SQL/semantic search client
+│   └── notifications/       # Multi-channel notification service
 ├── infrastructure/
 │   └── terraform/           # AWS infra (EKS, RDS, S3, ElastiCache, VPC)
 ├── docker/                  # Docker Compose for local dev
