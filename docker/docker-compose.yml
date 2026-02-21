@@ -59,22 +59,6 @@ services:
     networks:
       - ikigai-net
 
-  scraper:
-    build:
-      context: ../services/scraper
-      dockerfile: Dockerfile
-    container_name: ikigai-scraper
-    restart: "no" # Don't restart automatically, run on demand or cron
-    environment:
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    depends_on:
-      - postgres
-    networks:
-      - ikigai-net
 
   embedding:
     build:

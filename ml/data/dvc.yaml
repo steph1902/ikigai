@@ -1,0 +1,45 @@
+# DVC Data Pipeline Configuration
+# Tracks training datasets in S3 for reproducibility
+
+# Remote storage
+remote:
+  s3:
+    url: s3://ikigai-ml-data
+    region: ap-northeast-1
+
+# Data pipeline stages
+stages:
+  fetch_mlit_data:
+    cmd: python scripts/fetch_mlit_transactions.py
+    deps:
+      - scripts/fetch_mlit_transactions.py
+    outs:
+      - data/raw/mlit_transactions.parquet
+
+  fetch_rosenka:
+    cmd: python scripts/fetch_rosenka.py
+    deps:
+      - scripts/fetch_rosenka.py
+    outs:
+      - data/raw/rosenka.parquet
+
+  preprocess:
+    cmd: python scripts/preprocess.py
+    deps:
+      - scripts/preprocess.py
+      - data/raw/mlit_transactions.parquet
+      - data/raw/rosenka.parquet
+    params:
+      - training/feature_config.yaml
+    outs:
+      - data/processed/features.parquet
+
+  split:
+    cmd: python scripts/split_dataset.py
+    deps:
+      - scripts/split_dataset.py
+      - data/processed/features.parquet
+    outs:
+      - data/train.parquet
+      - data/val.parquet
+      - data/test.parquet

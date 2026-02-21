@@ -1,0 +1,185 @@
+/**
+ * SUMI (墨) Design Tokens — The IKIGAI Visual Design Language
+ *
+ * Based on: docs/The IKIGAI Visual Design Language.md
+ *
+ * Design Philosophy:
+ *   信頼 (Trust) — muted professionalism over flashy startup aesthetics
+ *   明快 (Clarity) — generous whitespace, clear hierarchy
+ *   和 (Harmony) — AI content feels integrated and calm
+ *
+ * Usage:
+ *   Import this file in your app's global CSS:
+ *   @import '@ikigai/ui/tokens.css';
+ */
+
+:root {
+    /* ─── Primary ─── */
+    --sumi-ink: #1A1A2E;
+    /* 墨色 (sumi-iro) — primary text, headers */
+    --sumi-ink-light: #2D2D44;
+    /* secondary text, active states */
+    --sumi-ink-muted: #6B6B80;
+    /* tertiary text, placeholders */
+
+    /* ─── Accent — 藍色 (ai-iro) ─── */
+    --sumi-indigo: #3D5A80;
+    /* primary action color */
+    --sumi-indigo-hover: #2C4A6E;
+    /* hover state */
+    --sumi-indigo-light: #E8EEF4;
+    /* backgrounds, selected states */
+    --sumi-indigo-50: #F4F7FA;
+    /* subtle backgrounds */
+
+    /* ─── Secondary Accent — 朽葉色 (kuchiba-iro) ─── */
+    --sumi-warm: #C17F59;
+    /* secondary CTA, highlights */
+    --sumi-warm-light: #F5EDE6;
+    /* warm background areas */
+
+    /* ─── Semantic ─── */
+    --sumi-success: #2E7D5B;
+    /* positive: completed, approved, good value */
+    --sumi-success-bg: #E6F4ED;
+    --sumi-warning: #B8860B;
+    /* caution: review needed, approaching deadline */
+    --sumi-warning-bg: #FFF8E1;
+    --sumi-danger: #C0392B;
+    /* alert: risk flags, overpriced, deadline passed */
+    --sumi-danger-bg: #FDEDED;
+    --sumi-info: #3D5A80;
+    /* informational (same as indigo) */
+    --sumi-info-bg: #E8EEF4;
+
+    /* ─── Surfaces ─── */
+    --sumi-bg-primary: #FAFAFA;
+    /* page background — warm off-white */
+    --sumi-bg-elevated: #FFFFFF;
+    /* cards, modals, sheets */
+    --sumi-bg-recessed: #F0F0F5;
+    /* input fields, code blocks */
+    --sumi-border: #E0E0E8;
+    /* default borders */
+    --sumi-border-strong: #C8C8D4;
+    /* emphasized borders */
+    --sumi-divider: #ECECF0;
+    /* horizontal rules, separators */
+
+    /* ─── AI-Specific ─── */
+    --sumi-ai-surface: #F6F4FF;
+    /* AI response bubble background — subtle purple tint */
+    --sumi-ai-accent: #7C6DAF;
+    /* AI indicator dot, "AI-generated" badge */
+    --sumi-ai-border: #E2DCF5;
+    /* AI content border */
+
+    /* ─── Typography ─── */
+    --font-sans: "Noto Sans JP", "Inter", "Hiragino Kaku Gothic ProN",
+        "Yu Gothic", "Meiryo", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", "Noto Sans Mono", "Consolas", monospace;
+
+    /* ─── Font Sizes (Japanese-optimized — slightly larger base) ─── */
+    --text-xs: 0.75rem;
+    /* 12px */
+    --text-sm: 0.875rem;
+    /* 14px */
+    --text-base: 1rem;
+    /* 16px */
+    --text-lg: 1.125rem;
+    /* 18px */
+    --text-xl: 1.25rem;
+    /* 20px */
+    --text-2xl: 1.5rem;
+    /* 24px */
+    --text-3xl: 1.875rem;
+    /* 30px */
+    --text-4xl: 2.25rem;
+    /* 36px */
+
+    /* ─── Line Heights (generous for mixed JP/EN readability) ─── */
+    --leading-tight: 1.3;
+    --leading-normal: 1.7;
+    /* Japanese text needs more line height */
+    --leading-relaxed: 2.0;
+
+    /* ─── Spacing Scale ─── */
+    --space-1: 0.25rem;
+    /* 4px */
+    --space-2: 0.5rem;
+    /* 8px */
+    --space-3: 0.75rem;
+    /* 12px */
+    --space-4: 1rem;
+    /* 16px */
+    --space-5: 1.25rem;
+    /* 20px */
+    --space-6: 1.5rem;
+    /* 24px */
+    --space-8: 2rem;
+    /* 32px */
+    --space-10: 2.5rem;
+    /* 40px */
+    --space-12: 3rem;
+    /* 48px */
+    --space-16: 4rem;
+    /* 64px */
+
+    /* ─── Border Radius ─── */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    /* ─── Shadows ─── */
+    --shadow-sm: 0 1px 2px rgba(26, 26, 46, 0.06);
+    --shadow-md: 0 2px 8px rgba(26, 26, 46, 0.08);
+    --shadow-lg: 0 4px 16px rgba(26, 26, 46, 0.10);
+    --shadow-xl: 0 8px 32px rgba(26, 26, 46, 0.12);
+
+    /* ─── Transitions ─── */
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+    --duration-slow: 400ms;
+    --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ─── Z-Index Scale ─── */
+    --z-dropdown: 50;
+    --z-sticky: 100;
+    --z-overlay: 200;
+    --z-modal: 300;
+    --z-toast: 400;
+}
+
+/* ─── Dark Mode ─── */
+[data-theme="dark"] {
+    --sumi-ink: #E8E8F0;
+    --sumi-ink-light: #C8C8D8;
+    --sumi-ink-muted: #8888A0;
+    --sumi-bg-primary: #0F0F1A;
+    --sumi-bg-elevated: #1A1A2E;
+    --sumi-bg-recessed: #12121F;
+    --sumi-border: #2A2A40;
+    --sumi-border-strong: #3A3A55;
+    --sumi-divider: #252538;
+    --sumi-indigo: #6B8DB5;
+    --sumi-indigo-hover: #7FA0C5;
+    --sumi-indigo-light: #1E2A3A;
+    --sumi-indigo-50: #141D28;
+    --sumi-warm: #D4956B;
+    --sumi-warm-light: #2A2218;
+    --sumi-success: #4CAF7A;
+    --sumi-success-bg: #1A2E24;
+    --sumi-warning: #D4A01A;
+    --sumi-warning-bg: #2A2510;
+    --sumi-danger: #E05A4F;
+    --sumi-danger-bg: #2E1A1A;
+    --sumi-ai-surface: #1A1828;
+    --sumi-ai-accent: #9B8FCC;
+    --sumi-ai-border: #2D2845;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.6);
+}

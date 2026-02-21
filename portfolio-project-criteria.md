@@ -146,9 +146,9 @@ The **mediation boundary detection** (`mediation.py`) is particularly noteworthy
 
 **Architecture:**
 - **Turborepo monorepo** with clear boundaries: `apps/`, `services/`, `packages/`, `infrastructure/`
-- 4 apps: Next.js 15 web (`apps/web`), React Native/Expo mobile (`apps/mobile`), admin dashboard (`apps/admin`), LINE bot on Cloudflare Workers (`apps/line-bot`)
-- 6 microservices: Python/FastAPI orchestrator, pricing model, VR engine, document OCR, embedding, scraper
-- 9 shared packages: `db` (Drizzle ORM), `ui` (SUMI design system), `i18n`, `auth`, `validators`, `types`, `domain`, `logger`, `seed`
+- 5 apps: Next.js 15 web (`apps/web`), React Native/Expo mobile (`apps/mobile`), admin dashboard (`apps/admin`), partner agent dashboard (`apps/agent-dashboard`), LINE bot on Cloudflare Workers (`apps/line-bot`)
+- 5 microservices: Python/FastAPI orchestrator, pricing model, VR engine, document OCR, embedding
+- 18 shared packages: `db`, `ui`, `i18n`, `auth`, `validators`, `types`, `domain`, `logger`, `seed`, `api`, `ai`, `actions`, `workflow`, `documents`, `pricing`, `vr`, `search`, `notifications`
 
 **Database schema** — 11 Drizzle schema files covering:
 `properties.ts`, `users.ts`, `journeys.ts`, `transactions.ts`, `conversations.ts`, `documents.ts`, `predictions.ts`, `action-logs.ts`, `hazards.ts`, `auth.ts` — plus migrations in `packages/db/drizzle/`
@@ -285,8 +285,8 @@ The [Data Strategy](docs/Data%20Strategy%20for%20a%20Portfolio%20Project.md) is 
 #### Honest Gaps
 
 - No real data is used. All data is synthetic. This is the correct choice for a portfolio project but should be acknowledged.
-- No data versioning (e.g., DVC) or experiment tracking (MLflow).
-- The `services/scraper/` exists in the repo but is a placeholder for future real data ingestion.
+- DVC pipeline and MLflow config exist in `ml/` but no live model training has been run.
+- Scraper service was intentionally excluded per the Data Strategy doc ("Don't Scrape" principle).
 
 ---
 
@@ -494,7 +494,7 @@ Transparency is the point. Here is the honest breakdown:
 | Document OCR pipeline | Service scaffolded; full OCR pipeline not implemented |
 | VR/3D rendering engine | Service scaffolded; WebXR pipeline not implemented |
 | Embedding service | Service scaffolded; vector search not connected |
-| Scraper service | Service scaffolded; no live data ingestion |
+| Data ingestion | Intentionally excluded — synthetic data per Data Strategy doc |
 | E-signature integration | Designed behind interface; DocuSign/CloudSign stubs |
 | KYC/identity verification | Designed behind interface; Plaid/TrustDock stubs |
 
@@ -566,8 +566,7 @@ ikigai/
 │   ├── pricing-model/    # ML price prediction (Python)
 │   ├── vr-engine/        # 3D/WebXR generation
 │   ├── document-ocr/     # Legal document analysis
-│   ├── embedding/        # Vector embedding service
-│   └── scraper/          # Data ingestion adapter
+│   └── embedding/        # Vector embedding service
 ├── packages/
 │   ├── db/               # Drizzle ORM — 11 schema files
 │   ├── ui/               # SUMI design system — 10+ components

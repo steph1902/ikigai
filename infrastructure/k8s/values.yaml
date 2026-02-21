@@ -1,0 +1,192 @@
+# IKIGAI Platform — Default Helm Values
+# Override per environment: values-staging.yaml, values-production.yaml
+
+global:
+  region: ap-northeast-1
+  imageRegistry: ""  # Override with ECR registry URL
+  imagePullPolicy: IfNotPresent
+
+# ─── Web App (Next.js) ──────────────────────────────────────────────────────
+web:
+  replicaCount: 2
+  image:
+    repository: ikigai-web
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 3000
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  env:
+    - name: NODE_ENV
+      value: production
+    - name: NEXT_PUBLIC_APP_URL
+      value: https://ikigai.jp
+
+# ─── Admin Dashboard ────────────────────────────────────────────────────────
+admin:
+  replicaCount: 1
+  image:
+    repository: ikigai-admin
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 3001
+
+# ─── Agent Dashboard ────────────────────────────────────────────────────────
+agentDashboard:
+  replicaCount: 1
+  image:
+    repository: ikigai-agent-dashboard
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 3002
+
+# ─── LINE Bot ────────────────────────────────────────────────────────────────
+lineBot:
+  replicaCount: 2
+  image:
+    repository: ikigai-line-bot
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8080
+  env:
+    - name: LINE_CHANNEL_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: ikigai-secrets
+          key: line-channel-secret
+
+# ─── Orchestrator (Python) ──────────────────────────────────────────────────
+orchestrator:
+  replicaCount: 2
+  image:
+    repository: ikigai-orchestrator
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8000
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+  env:
+    - name: ANTHROPIC_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ikigai-secrets
+          key: anthropic-api-key
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: ikigai-secrets
+          key: database-url
+
+# ─── Pricing Model ──────────────────────────────────────────────────────────
+pricingModel:
+  replicaCount: 1
+  image:
+    repository: ikigai-pricing-model
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8002
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+
+# ─── Document OCR ───────────────────────────────────────────────────────────
+documentOcr:
+  replicaCount: 1
+  image:
+    repository: ikigai-document-ocr
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8003
+
+# ─── Embedding Service ──────────────────────────────────────────────────────
+embedding:
+  replicaCount: 1
+  image:
+    repository: ikigai-embedding
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8001
+  env:
+    - name: COHERE_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ikigai-secrets
+          key: cohere-api-key
+
+# ─── VR Engine ──────────────────────────────────────────────────────────────
+vrEngine:
+  replicaCount: 1
+  image:
+    repository: ikigai-vr-engine
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8004
+
+# ─── Ingress ────────────────────────────────────────────────────────────────
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+  hosts:
+    - host: ikigai.jp
+      paths:
+        - path: /
+          pathType: Prefix
+          service: web
+        - path: /api/orchestrator
+          pathType: Prefix
+          service: orchestrator
+        - path: /api/line/webhook
+          pathType: Prefix
+          service: lineBot
+    - host: admin.ikigai.jp
+      paths:
+        - path: /
+          pathType: Prefix
+          service: admin
+    - host: agent.ikigai.jp
+      paths:
+        - path: /
+          pathType: Prefix
+          service: agentDashboard
+  tls:
+    - secretName: ikigai-tls
+      hosts:
+        - ikigai.jp
+        - admin.ikigai.jp
+        - agent.ikigai.jp
+
+# ─── Database (external — AWS RDS) ──────────────────────────────────────────
+database:
+  host: ""  # PostgreSQL RDS endpoint
+  port: 5432
+  name: ikigai
+  sslMode: require
+
+# ─── Redis (external — AWS ElastiCache) ──────────────────────────────────────
+redis:
+  host: ""  # ElastiCache endpoint
+  port: 6379

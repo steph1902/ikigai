@@ -1,0 +1,182 @@
+# IKIGAI Price Prediction — Feature Configuration
+# Used by the LightGBM training pipeline
+
+model:
+  name: ikigai-price-prediction
+  version: "0.1.0"
+  type: lightgbm
+  task: regression
+
+features:
+  # ─── Property Physical Features ────────────────────────────────────────
+  numeric:
+    - name: total_area_sqm
+      description: "Total building area (専有面積)"
+      importance: very_high
+
+    - name: land_area_sqm
+      description: "Land area (敷地面積) — for kodate/land"
+      importance: high
+
+    - name: floor_level
+      description: "Floor level for mansions (階数)"
+      importance: medium
+
+    - name: total_floors
+      description: "Building total floors (総階数)"
+      importance: medium
+
+    - name: building_age_years
+      description: "Years since construction (築年数)"
+      importance: very_high
+
+    - name: num_rooms
+      description: "Number of rooms"
+      importance: high
+
+    - name: management_fee_monthly
+      description: "Monthly management fee (管理費/月)"
+      importance: medium
+
+    - name: repair_reserve_monthly
+      description: "Monthly repair reserve (修繕積立金/月)"
+      importance: medium
+
+  # ─── Location Features ─────────────────────────────────────────────────
+  location:
+    - name: latitude
+      description: "GPS latitude"
+      importance: high
+
+    - name: longitude
+      description: "GPS longitude"
+      importance: high
+
+    - name: nearest_station_walk_minutes
+      description: "Walk time to nearest station (駅徒歩分)"
+      importance: very_high
+
+    - name: nearest_station_is_express
+      description: "Whether nearest station is express stop"
+      importance: medium
+
+    - name: rosenka_value
+      description: "路線価 — road-front land value per sqm"
+      importance: very_high
+
+    - name: kouji_chika
+      description: "公示地価 — official land price"
+      importance: high
+
+  # ─── Categorical Features ──────────────────────────────────────────────
+  categorical:
+    - name: prefecture
+      description: "Prefecture (都道府県)"
+      importance: very_high
+      encoding: target_encoding
+
+    - name: municipality
+      description: "Municipality (市区町村)"
+      importance: high
+      encoding: target_encoding
+
+    - name: building_type
+      description: "mansion, kodate, land (マンション/戸建て/土地)"
+      importance: high
+      encoding: one_hot
+
+    - name: structure_type
+      description: "RC, SRC, steel, wood (構造)"
+      importance: medium
+      encoding: one_hot
+
+    - name: earthquake_standard
+      description: "old, new, grade1-3 (耐震基準)"
+      importance: very_high
+      encoding: ordinal
+
+    - name: floor_plan_type
+      description: "Layout code: 1R, 1K, 1LDK, 2LDK, 3LDK, etc. (間取り)"
+      importance: high
+      encoding: target_encoding
+
+    - name: zoning
+      description: "用途地域 — usage zone designation"
+      importance: medium
+      encoding: target_encoding
+
+  # ─── Hazard Features ───────────────────────────────────────────────────
+  hazard:
+    - name: flood_risk
+      description: "Flood risk level from hazard map (浸水リスク)"
+      importance: medium
+      encoding: ordinal
+
+    - name: landslide_risk
+      description: "Landslide risk level (土砂災害リスク)"
+      importance: medium
+      encoding: ordinal
+
+    - name: liquefaction_risk
+      description: "Liquefaction risk level (液状化リスク)"
+      importance: medium
+      encoding: ordinal
+
+  # ─── Derived Features ──────────────────────────────────────────────────
+  derived:
+    - name: price_per_sqm_area_avg
+      description: "Average ¥/sqm for the district"
+      source: computed
+
+    - name: building_coverage_ratio
+      description: "建ぺい率 (%)"
+      source: property
+
+    - name: floor_area_ratio
+      description: "容積率 (%)"
+      source: property
+
+    - name: renovation_years_ago
+      description: "Years since last renovation (null = never)"
+      source: computed
+
+    - name: distance_to_cbd_km
+      description: "Distance to nearest CBD (km)"
+      source: computed
+
+training:
+  objective: regression
+  metric: mape
+  hyperparameters:
+    num_leaves: 63
+    learning_rate: 0.05
+    n_estimators: 1000
+    max_depth: -1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    reg_lambda: 0.1
+    min_child_samples: 20
+    early_stopping_rounds: 50
+
+  validation:
+    strategy: time_based_split
+    test_size: 0.15
+    val_size: 0.15
+
+  explanation:
+    method: shap
+    top_k_factors: 5  # Show top 5 positive and negative factors
+    language: [ja, en]
+
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_name: "ikigai-price-prediction"
+  registered_model_name: "ikigai-pricing-v1"
+
+schedule:
+  retraining: quarterly
+  drift_detection:
+    metric: psi  # Population Stability Index
+    threshold: 0.2
+    check_frequency: weekly
