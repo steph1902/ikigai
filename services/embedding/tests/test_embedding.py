@@ -1,11 +1,12 @@
 """
 Tests for the embedding service.
 """
-import pytest
 import sys
 import os
+import math
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+_service_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _service_dir)
 
 from main import generate_mock_embedding
 
@@ -20,7 +21,6 @@ class TestEmbeddingService:
 
     def test_mock_embedding_normalized(self):
         """Mock embeddings should be approximately unit length."""
-        import math
         embedding = generate_mock_embedding("渋谷区の3LDKマンション")
         magnitude = math.sqrt(sum(x * x for x in embedding))
         assert 0.9 < magnitude < 1.1
